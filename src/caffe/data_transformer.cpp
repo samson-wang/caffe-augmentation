@@ -353,7 +353,8 @@ void DataTransformer<Dtype>::Transform(const cv::Mat& img,
 
   const bool do_rotation = rotation_angle > 0 && phase_ == TRAIN;
 
-  const bool do_resize_to_min_side = min_side > 0;
+  caffe_rng_uniform(1, 0.f, 1.f, &current_prob);
+  const bool do_resize_to_min_side = min_side > 0 && current_prob > 1.f - param_.apply_probability() / 2.f;
   const bool do_resize_to_min_side_min = min_side_min > 0;
   const bool do_resize_to_min_side_max = min_side_max > 0;
 
